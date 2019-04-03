@@ -7,9 +7,15 @@
     "precommit": "npm run lint"
   },
   "dependencies": {
+    "@babel/polyfill": "^7.4.3",
     "antd": "^3.13.6",
     "babel-plugin-import": "^1.11.0",
     "dva": "^2.4.1",
+    "dva-loading": "^2.0.6",
+    "html2canvas": "^1.0.0-alpha.12",
+    "lodash": "^4.17.11",
+    "mapv": "^2.0.34",
+    "prop-types": "^15.7.2",
     "react": "^16.2.0",
     "react-dom": "^16.2.0"
   },
