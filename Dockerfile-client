@@ -1,0 +1,12 @@
+FROM scratch
+ADD . /code
+WORKDIR /code
+RUN npm set registry https://registry.npm.taobao.org
+RUN yarn global add lerna
+COPY larna.json .
+COPY packages.json .
+
+COPY packages/cloud-client ./packages/cloud-client
+
+RUN lerna bootstrap
+

@@ -1,0 +1,15 @@
+version: '3'
+services:
+  client:
+    build: 
+      context: .
+      dockerfile: Dockerfile-client
+    command: npm --prefix packages/cloud-client run start
+    ports:
+     - "8000:8000"
+    
+  server:
+    build:
+      context: .
+      dockerfile: Dokcerfile-server
+    command: npm --prefix packages/cloud-server run debug
