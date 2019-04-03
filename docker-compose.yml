@@ -7,9 +7,18 @@ services:
     command: npm --prefix packages/cloud-client run start
     ports:
      - "8000:8000"
-    
+    volumes:
+      - ./packages/cloud-client:/code/packages/cloud-client
+
   server:
     build:
       context: .
       dockerfile: Dokcerfile-server
     command: npm --prefix packages/cloud-server run debug
+    ports:
+      - 7001:7001
+      - 9999:9999
+    depends_on:
+      - db
+     volumes:
+      - ./packages/cloud-server:/code/packages/cloud-server
