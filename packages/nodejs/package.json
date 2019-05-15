@@ -1,0 +1,26 @@
+{
+  "name": "nodejs",
+  "version": "1.0.0",
+  "description": "study node",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run test"
+  },
+  "keywords": [
+    "1"
+  ],
+  "author": "lomean",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0"
+  },
+  "dependencies": {
+    "buffer": "^5.2.1",
+    "crypto": "^1.0.1",
+    "fs": "0.0.1-security",
+    "http": "0.0.0",
+    "os": "^0.1.1",
+    "pipe": "^1.1.0"
+  }
+}
