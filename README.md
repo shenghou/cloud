@@ -1,11 +1,4 @@
-# cloud 
 
-* make data visualization with react compoents
+# study book
 
-
-### dev
-```bash
-$ docker compose up -d
-$ open http://localhost:8000/
-```
-
+* 
