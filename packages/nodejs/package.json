@@ -18,6 +18,7 @@
   "dependencies": {
     "buffer": "^5.2.1",
     "crypto": "^1.0.1",
+    "event": "^1.0.0",
     "fs": "0.0.1-security",
     "http": "0.0.0",
     "os": "^0.1.1",
