@@ -1,0 +1,42 @@
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# text editors
+.idea/*
+.vscode/*
+
+# dependencies
+node_modules
+package-lock.json
+
+# testing
+coverage
+
+# development
+.env.local
+
+# production
+
+# misc
+.DS_Store
+npm-debug.log
+
+# cache
+.eslintcache
+
+# local config
+
+# e2e test
+
+# customize
+/src/customize/*
+!/src/customize/index.js
+!/src/customize/XSKY
+
+# storybook build
+build-stories
+
+gitflow
+
+.ssh
+# yarn
+yarn.lock
