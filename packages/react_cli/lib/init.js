@@ -60,7 +60,19 @@ const question = [
     transformer(val) {
       return val;
     }
+  }, {
+    type: 'input',
+    name: 'email',
+    message: 'xx@163.com',
+    default: 'project email',
+    validate (val) {
+      return true;
+    },
+    transformer(val) {
+      return val;
+    }
   }
+  // any you want to show in your project
 ]
 module.exports = prompt(question).then(({name, template, description, author}) => {
   const projectName = name;
