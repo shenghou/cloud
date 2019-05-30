@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" id="viewport" content="width=device-width" />
+    <title>demon</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/javascript">
+      //判断数据类型
+      const checkType = type => target =>
+        `[object ${type}]` === Object.prototype.toString.call(target);
+      const isNull = checkType("Null")(null);
+      const isArray = checkType("Array")([1, 9]);
+
+      /**
+       * es5实现数组map方法
+       * [self, item, index, this]
+       */
+      const selfMap = function(fn, cxt) {
+        let arr = Array.prototype.slice.call(this);
+        let arryMap = [];
+        for (let i = 0; i < arr.length; i++) {
+          arryMap.push(fn.call(cxt), arr[i], i, this);
+        }
+        return arryMap;
+      };
+
+      /**
+       * es5实现数组filter方法
+       * [self, item, index, this]
+       */
+      const selfFliter = function(fn, cxt) {
+        let arr = Array.prototype.slice.call(this);
+        let filterArrat = [];
+        for (let i = 0; i < arr.length; i++) {
+          fn.call(cxt, arr[i], i, this) && filterArrat.push(arr[i]);
+        }
+        return filterArrat;
+      };
+
+
+
+
+    </script>
+  </body>
+</html>
