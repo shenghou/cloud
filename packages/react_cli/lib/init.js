@@ -74,7 +74,7 @@ const question = [
   }
   // any you want to show in your project
 ]
-module.exports = prompt(question).then(({name, template, description, author}) => {
+module.exports = prompt(question).then(({name, template, description, author, email}) => {
   const projectName = name;
   const templateName = template;
   const gitPlace = tplList[templateName]['place'];
@@ -96,6 +96,7 @@ module.exports = prompt(question).then(({name, template, description, author}) =
       packageJson.name = name;
       packageJson.description = description;
       packageJson.author = author;
+      packageJson.email = email;
       var updatePackageJson = JSON.stringify(packageJson, null, 2);
       fs.writeFile(`./${projectName}/package.json`, updatePackageJson, 'utf8', function (err) {
         if(err) {
