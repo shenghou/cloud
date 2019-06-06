@@ -63,7 +63,7 @@ const question = [
   }, {
     type: 'input',
     name: 'email',
-    message: 'xx@163.com',
+    message: 'hou993268@163.com',
     default: 'project email',
     validate (val) {
       return true;
