@@ -2,6 +2,8 @@
 
 基于最近参与的两个项目对 react-redux 和 react context 做总结
 
+## react-redux
+
 redux 中有三大核心 store、 reducer、action
 
 其中 store 全局唯一，用于保存 app 里的 state，
@@ -345,4 +347,80 @@ export function filterSelectors(...args) {
 }
 
 export default selectors;
+```
+
+page.js
+
+```js
+import { compose } from "redux";
+import { connect } from "react-redux";
+import { filterSelectors } from "~/selectors";
+import { filterDispatchers } from "~/actions";
+const connector = compose(
+  connect(
+    filterSelectors("state"),
+    filterDispatchers("action")
+  ),
+  Hoc()
+);
+class Page extends React.Componet {}
+export default connector(Page);
+```
+
+## react context
+
+`context`是由 react 原生的跨组件数据传输方案，其 API 包括 `React.creatContext, Context.Provider, Context.Consumer`,
+
+### creatContext
+
+context.js
+
+```js
+import React from "react";
+export const GlobalContext = React.createContext({
+  user: {},
+  updateUser() {}
+});
+```
+
+provider.js
+
+```js
+    import {GlobalContext} from '/context'
+    class page extends React.componet{
+        updateUser() {
+            return update
+        }
+        render() {
+            const response  = this.fetch();
+            return (
+            <GlobalContext.Provider
+                value={
+                    user:this.response.user,
+                    updateUser: this.updateUser
+                }
+            >
+            <GlobalContext.Provider>
+            )
+        }
+    }
+
+```
+
+consumer.js
+
+```js
+import { GlobalContext } from "/context";
+class page extends React.componet {
+  render() {
+    <div>111</div>;
+  }
+}
+export default props => (
+  <GlobalContext.Consumer>
+    {({ user, updateUser }) => (
+      <Resources {...props} user={user} updateUser={updateUser} />
+    )}
+  </GlobalContext.Consumer>
+);
 ```
