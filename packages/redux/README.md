@@ -9,12 +9,23 @@ redux 中有三大核心 store、 reducer、action
 ### 创建 store
 
 ```js
-import { creatStore } from "redux";
-//@param{Funx}   reducer          为一个返回下一个state的函数
+import {
+  createStore,
+  combineReducers,
+  bindActionCreators,
+  applyMiddleware,
+  compose,
+  __DO_NOT_USE__ActionTypes
+} from "redux";
+//@param{Func}   reducer          为一个返回下一个state的函数
 //@param{any}  preloadedState   初始state
-//@param{Funx}  enhancer         可用于第三方的
+//@param{Func}  enhancer         可用于第三方的
 const store = createStore(reducer, preloadedState, enhancer);
-//store 返回四个方法 dispatch,subscribe,getState,replaceReducer 稍后介绍
+//store 返回四个方法
+//dispatch,      更新state
+//subscribe,
+//getState,      获取state
+//replaceReducer
 ```
 
 至此 store 就创建成功了，但是为了和 react 结合，我们需要引入`react-redux`；
@@ -133,13 +144,9 @@ import { render } from "react-dom";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
 import Counter from "./counter";
-
-import "./styles.css";
-
 const initStatus = {
   count: 0
 };
-
 function reducer(state = initStatus, action) {
   switch (action.type) {
     case "INCREMENT_COUNT":
@@ -152,7 +159,6 @@ function reducer(state = initStatus, action) {
       return state;
   }
 }
-
 class App extends React.Component {
   render() {
     const store = createStore(reducer);
@@ -163,7 +169,6 @@ class App extends React.Component {
     );
   }
 }
-
 const rootElement = document.getElementById("root");
 render(<App />, rootElement);
 ```
@@ -174,8 +179,6 @@ counter.js
 import * as React from "react";
 import { connect } from "react-redux";
 import { incrementCount } from "./action";
-import "./styles.css";
-
 function mapStateToProps(state) {
   return {
     count: state.count
@@ -215,4 +218,131 @@ class Counter extends React.Component {
   }
 }
 export default connect(mapStateToProps)(Counter);
+```
+
+action.js
+
+```js
+const INCREMENT_COUNT = "INCREMENT_COUNT";
+export function incrementCount() {
+  return { type: INCREMENT_COUNT };
+}
+```
+
+一个简单版的 react-redux 就介绍完毕
+
+然而我们的项目都会比较复杂，这样简单的并不适用
+
+### 合并多个 reducer `combineReducers`
+
+考虑到多个 reducer 不易操作，我们把多个 reducer 合并成一个 reduer 来方便管理（APIReducer，我们把与 API 相关的也抽象成一个 reducer，稍后介绍）
+rootReducer.js
+
+```js
+import { routerReducer as routing } from "react-router-redux";
+import { combineReducers } from "redux";
+import reducer1 from "./reducer1";
+import reducer2 from "./reducer2";
+import reducer3 from "./reducer3";
+import {
+  reducer as formReducer,
+  actionTypes as formActionTypes
+} from "redux-form";
+import { reducer as uiReducer } from "redux-ui";
+import { reducers as APIReducer } from "~/API";
+const rootReducer = combineReducers({
+  APIReducer,
+  reducer1,
+  reducer2,
+  reducer3,
+  form: formReducer.plugin({
+    HostForm: (state, action) => {
+      if (!state || lodash.get(action, "XX") !== "XX") return state;
+      //TODO SOMETHIN
+      return state;
+    }
+  }),
+  ui: uiReducer
+});
+
+export default rootReducer;
+```
+
+### 合并多个 action
+
+同样与 API 相关的也抽象成 Actions 方便管理
+rootActions.js
+
+```js
+import lodash from "lodash";
+import * as action1 from "./action1";
+import * as action2 from "./action2";
+import * as action3 from "./action3";
+import { actions as APIActions } from "~/API";
+const actions = Object.assign({}, APIActions, action1, action2, action3);
+export function filterDispatchers(...args) {
+  args.forEach(v => {
+    if (!actions.hasOwnProperty(v)) {
+      throw new Error(`filterDispatchers: No dispatcher named: ${v}`);
+    }
+  });
+  return lodash.pick(actions, args);
+}
+export default actions;
+```
+
+### 配置 store
+
+```js
+import { createStore } from "redux";
+import rootReducer from "../reducers";
+import rootEnhancer from "./enhancer"; //处理token  license等中间件
+export default function configureStore(preloadedState) {
+  const store = createStore(rootReducer, preloadedState, rootEnhancer);
+  if (module.hot) {
+    module.hot.accept("../reducers", () => {
+      const nextRootReducer = require("../reducers").default;
+      store.replaceReducer(nextRootReducer);
+    });
+  }
+
+  return store;
+}
+```
+
+### 配置 selectors
+
+componets.js
+
+```js
+export const selector1 = state => state.selector1;
+export const selector2 = state => state.selector2;
+export const selector3 = state => state.selector3;
+```
+
+selectors.js
+
+```js
+import lodash from "lodash";
+import { createSelector } from "reselect";
+import * as componentSelectors from "./components";
+import { selectors as APISelectors } from "~/API";
+const selectors = Object.assign(componentSelectors, APISelectors);
+export function filterSelectors(...args) {
+  return function mapStateToProps(state) {
+    const inputSelectors = args.map(v => {
+      const selector = `${v}Selector`;
+      if (!selectors.hasOwnProperty(selector)) {
+        throw new Error(`filterSelectors: No selector named: ${selector}`);
+      }
+      return selectors[selector];
+    });
+    return createSelector(
+      inputSelectors,
+      (...selected) => lodash.zipObject(args, selected)
+    )(state);
+  };
+}
+
+export default selectors;
 ```
