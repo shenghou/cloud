@@ -30,3 +30,4 @@ button.onclick = function() {
   this.insert();
 };
 ```
+此对象无 `prototype`  没有`valueof`, `toSting`
