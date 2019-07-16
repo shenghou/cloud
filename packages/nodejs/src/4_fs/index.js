@@ -51,3 +51,38 @@ const filePath = "file.txt";
 //     console.error(err);
 //   }
 // });
+
+// fs.mkdir('mkdir/app', {recursive:true}, err => {
+//     if(err) throw err
+//     console.log('创建文件夹成功')
+// })
+
+// fs.read(filePath, Buffer, 0, 0, 0, (err, fd) => {
+//   if (err) throw err;
+//   console.log(fd);
+// });
+
+// fs.readdir("file.txt", (err, file) => {
+//   if (err) throw err;
+//   console.log(file);
+// });
+
+// fs.readFile(filePath, "utf8", (err, fd) => {
+//   if (err) throw err;
+//   console.log(fd);
+// });
+
+// fs.readFile(filePath,  (err, fd) => {
+//   if (err) throw err;
+//   console.log(fd);
+// });
+
+// fs.rename(filePath, 'rename.text', err => {
+//     if(err) throw err
+//     console.log('改名成功')
+// })
+
+// fs.writeFile(filePath, '，我是新写入的文件', 'utf8', err=> {
+//     if(err) throw err
+//     console.log('我又写入了')
+// })
