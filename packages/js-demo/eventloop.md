@@ -122,3 +122,35 @@ console.log("script end");
 最后执行微任务 `promise.then()` 打印`promise2`
 
 - 参考[https://segmentfault.com/a/1190000017224799](https://segmentfault.com/a/1190000017224799)
+
+```js
+new Promise((resolve, reject) => {
+  console.log("promise1");
+  resolve();
+})
+  .then(() => {
+    console.log(1);
+  })
+  .then(() => {
+    console.log(2);
+  })
+  .then(() => {
+    console.log(3);
+  });
+
+new Promise((resolve, reject) => {
+  console.log("promise2");
+  resolve();
+})
+  .then(() => {
+    console.log(4);
+  })
+  .then(() => {
+    console.log(5);
+  })
+  .then(() => {
+    console.log(6);
+  });
+```
+
+promise1 pormise2 1 4 2 5 3 6
