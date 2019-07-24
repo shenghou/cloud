@@ -22,7 +22,7 @@
   - `connect`: `DragSourceConnector`的实例，连接 DOM 节点到
   - `monitor`: `DragSourceMonitor`的实例，用于查看当前拖状态信息
 
-可以看到 React DnD API 主要包含注册插件函数、可拖动资源、可接受资源三类，其中对于资源的拖动可进一步分为类型、资源控制、连接
+可以看到 React DnD API 主要包含注册插件函数、可拖动资源、可接受资源三类，其中对于资源的拖动可进一步分为类型、资源控制、连接，符合 HOC 的嵌套模式，以配置为主。
 
 ### angular material drag and drop
 
