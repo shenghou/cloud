@@ -37,7 +37,7 @@ eg:
 </div>
 ```
 
-对于列表其直接提供了`cdkDropList`来展示列表拖动, `drop(event)`用来监控拖拽事件
+`cdkDropList`用来展示列表拖动, `drop(event)`用来监控拖拽事件
 eg:
 
 ```html
@@ -46,7 +46,7 @@ eg:
 </div>
 ```
 
-多个列表间转换提供`cdkDropListConnectedTo`用于指定转换连接指定的`listData`,指令为`cdkDropListData`
+`cdkDropListConnectedTo`可用于多个列表转换，用于指定转换连接指定的`listData`,指令为`cdkDropListData`
 eg:
 
 ```html
@@ -324,3 +324,142 @@ eg:
   Dragging starts after one second
 </div>
 ```
+
+### vue.draggable
+
+基于`Sortable.js`实现的在 vue 中使用的拖拽插件
+
+`list`也是用于简单的列表展示，`disabled`用于指定可否被拖拽，`move`用于拖动事件
+
+```js
+<template>
+  <div class="row">
+    <div class="col-6">
+      <h3>Draggable {{ draggingInfo }}</h3>
+      <draggable
+        :list="list"
+        :disabled="!enabled"
+        class="list-group"
+        ghost-class="ghost"
+        :move="checkMove"
+        @start="dragging = true"
+        @end="dragging = false"
+      >
+        <div
+          class="list-group-item"
+          v-for="element in list"
+          :key="element.name"
+        >
+          {{ element.name }}
+        </div>
+      </draggable>
+    </div>
+    <rawDisplayer class="col-3" :value="list" title="List" />
+  </div>
+</template>
+<script>
+  components: {
+    draggable
+  },
+  data() {
+    return {
+      enabled: true,
+      list: [
+        { name: "John", id: 0 },
+        { name: "Joao", id: 1 },
+        { name: "Jean", id: 2 }
+      ],
+      dragging: false
+    };
+  },
+  computed: {
+    draggingInfo() {
+      return this.dragging ? "under drag" : "";
+    }
+  },
+  methods: {
+    checkMove: function(e) {
+      window.console.log("Future index: " + e.draggedContext.futureIndex);
+    }
+  }
+</script>
+```
+
+`group`可指定两列拖拽属性
+
+`:group="{ name: 'people', pull: 'clone', put: false }"`
+
+- name 指定列名
+- pull 指定拖属性 克隆、true/fale
+- put 指定收 是否接收等
+
+```html
+<div class="col-3">
+  <h3>Draggable 1</h3>
+  <draggable
+    class="dragArea list-group"
+    :list="list1"
+    :group="{ name: 'people', pull: 'clone', put: false }"
+    :clone="cloneDog"
+    @change="log"
+  >
+    <div class="list-group-item" v-for="element in list1" :key="element.id">
+      {{ element.name }}
+    </div>
+  </draggable>
+</div>
+```
+
+`handle="classname"` 指定手柄()
+
+`draggable="classname"`可拖拽项
+
+`slot` 插槽
+
+`<transition-group>`指定动画效果
+
+```html
+<div>
+  <draggable
+    class="list-group"
+    tag="ul"
+    v-model="list"
+    v-bind="dragOptions"
+    @start="drag = true"
+    @end="drag = false"
+  >
+    <transition-group type="transition" :name="!drag ? 'flip-list' : null">
+      <li class="list-group-item" v-for="element in list" :key="element.order">
+        <i
+          :class="
+                  element.fixed ? 'fa fa-anchor' : 'glyphicon glyphicon-pushpin'
+                "
+          @click="element.fixed = !element.fixed"
+          aria-hidden="true"
+        ></i>
+        {{ element.name }}
+      </li>
+    </transition-group>
+  </draggable>
+</div>
+```
+
+`nested` 嵌套，也是目前 wizard 拓扑图目前所用到的
+
+对比三种不同框架所实现的拖拽功能，可以看到 angular API 最为清晰，每一项都代表一项功能，没有嵌套，vue 功能最为使用，是由于其基于`sortanle.js`，wizard 目前的拖动主要已树形结构的嵌套为主，react 由于 HOC 原因会有量嵌套而显得不直观。
+
+所以一个比较全面的拖拽组件应该包含如下功能：
+
+| API           | type               | fucntion           |
+| ------------- | ------------------ | ------------------ |
+| candrag       | boolean            | 整个内容能否被拖拽 |
+| disable       | boolean            | 单独项的拖拽       |
+| disableSort   | boolean            | 列表排序           |
+| clone         | boolean            | 是否是克隆元素     |
+| connect       | string/other       | 多个 list 时候连接 |
+| handle        | classname/element  | 手柄点击区域       |
+| transition    | css info           | 过度效果           |
+| boundary      | classname/element  | 边界               |
+| diretion      | x/y                | 指定方向           |
+| predicateData | ()=>{return value} | 期待接收的值       |
+| nested        | ?                  | 嵌套               |
