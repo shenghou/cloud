@@ -1,0 +1,40 @@
+{
+  "name": "dnd_demo",
+  "version": "1.0.0",
+  "description": "den demo",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "react-scripts start",
+    "build": "react-scripts build"
+  },
+  "author": "lomean",
+  "license": "ISC",
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.19",
+    "@fortawesome/free-solid-svg-icons": "^5.9.0",
+    "@fortawesome/react-fontawesome": "^0.1.4",
+    "classnames": "^2.2.6",
+    "node-sass": "^4.12.0",
+    "react": "^16.8.6",
+    "react-dnd": "^9.3.2",
+    "react-dnd-html5-backend": "^9.3.2",
+    "react-dom": "^16.8.6",
+    "react-scripts": "^3.0.1"
+  },
+  "devDependencies": {
+    "typescript": "^3.5.3"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
