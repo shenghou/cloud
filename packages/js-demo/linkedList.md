@@ -122,3 +122,92 @@ this.indexof = function() {
   return -1;
 };
 ```
+
+### 双向链表
+
+双向链表与单向链表有很多相似，只是添加了个 prev 指向上一个元素
+
+```js
+function DoublyLinkedList() {
+  var Node = function(element) {
+    this.element;
+    this.next = null;
+    this.prev = null; //新增
+  };
+  var length = 0;
+  var haad = null;
+  var tail = null; //新增
+}
+```
+
+基本实现如下，与单向略有区别
+
+```js
+this.insert = function(position, element) {
+  //与单向的区别是要控制个prev指针
+  if (position >= 0 && position <= length) {
+    var node = new Node(element),
+      current = head,
+      previous,
+      index = 0;
+    if (position === 0) {
+      if (!head) {
+        head = node;
+        tail = node;
+      } else {
+        node.next = current;
+        current.prev = node;
+        head = node;
+      }
+    } else if (position === length) {
+      current = tail;
+      current.next = node;
+      node.prev = current;
+    } else {
+      while (index++ < position) {
+        previous = current;
+        current = current.next;
+      }
+      node.next = current;
+      previous.next = node;
+
+      current.prev = node;
+      node.prev = prevoous;
+    }
+    length++;
+    return true;
+  } else {
+    return false;
+  }
+};
+this.removeAt = function(position) {
+  if (position > -1 && position < length) {
+    var current = head,
+      previous,
+      index = 0;
+    if (position === 0) {
+      head = current.next;
+      if (length === 0) {
+        tail = null;
+      } else {
+        head.prev = null;
+      }
+    } else if (position === length - 1) {
+      current = tail;
+      tail = current.prev;
+      tail.next = null;
+    } else {
+      while (index++ < position) {
+        previous = current;
+        current = current.next;
+      }
+      previous.next = current.next;
+      current.next.prev = previous;
+    }
+    length--;
+    return current.element;
+  } else {
+    return null;
+  }
+};
+```
