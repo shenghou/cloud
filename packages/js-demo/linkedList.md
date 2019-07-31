@@ -211,3 +211,7 @@ this.removeAt = function(position) {
   }
 };
 ```
+
+### 循环链表
+
+双链表最后一项不是 null，而指向 head
