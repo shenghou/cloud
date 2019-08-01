@@ -8,3 +8,6 @@
 * [nodejs](https://github.com/shenghou/study-book/tree/master/packages/nodejs)
 * [python](https://github.com/shenghou/study-book/tree/master/packages/python)
 * [ts](https://github.com/shenghou/study-book/tree/master/packages/typescript)
+* [数据结构和算法](https://github.com/shenghou/study-book/tree/master/packages/dataStructure%26algorithm)
+* [Drag And Drop](https://github.com/shenghou/study-book/tree/master/packages/drag_and_drop)
+* [Redux](https://github.com/shenghou/study-book/tree/master/packages/redux)
