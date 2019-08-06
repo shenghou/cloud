@@ -11,3 +11,8 @@
 * [数据结构和算法](https://github.com/shenghou/study-book/tree/master/packages/dataStructure%26algorithm)
 * [Drag And Drop](https://github.com/shenghou/study-book/tree/master/packages/drag_and_drop)
 * [Redux](https://github.com/shenghou/study-book/tree/master/packages/redux)
+
+### 公众号
+![公众号](https://github.com/shenghou/blog/blob/master/src/%E5%85%AC%E4%BC%97%E5%8F%B7.jpg)
+### 微信
+![wechat](https://github.com/shenghou/blog/blob/master/src/WechatIMG94.jpeg)
