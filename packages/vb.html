@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <p>1111</p>
+    <input type="number" id="inp" />
+    <script language="javascript" type="text/javascript">
+      function axios() {
+         return new Promise( (resolve) => {
+            setTimeout( () => {
+               resolve(3)
+            }, 2000)
+         } )
+      }
+
+      async function comp() {
+        var a = await axios();
+        console.log(a)
+        document.getElementById("inp").value = a;
+      }
+      comp();
+    </script>
+  </body>
+</html>
