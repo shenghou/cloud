@@ -1,13 +1,14 @@
 ---
 name: Bug report
 about: Create a report to help us improve
-title: ''
-labels: ''
-assignees: ''
+title: bug:[XXX-Module] Text can not display.
+labels: bug
+assignees: shenghou
 
 ---
 
 **Describe the bug**
+**描述问**
 A clear and concise description of what the bug is.
 
 **To Reproduce**
