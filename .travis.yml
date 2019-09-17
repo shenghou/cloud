@@ -3,11 +3,9 @@ language: node_js
 node_js:
   - '8'
 install:
-  - npm i npminstall && npminstall
+  - npm install
 script:
   - npm run ci
   - npm run codecov
-after_script:
-  - npminstall codecov && codecov
 
 
