@@ -43,7 +43,7 @@
             }
             iterator1.next();
             iterator2.next();
-        }`
+        }
         alert('1 he 2 xiang deng')
     };
     const iterator1 = Iterator([1,2,3,4]);
