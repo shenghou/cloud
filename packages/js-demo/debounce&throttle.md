@@ -59,3 +59,6 @@ function debounce(func, wait, immediate) {
         }
     }
 ```
+
+[https://juejin.im/post/5b8de829f265da43623c4261](https://juejin.im/post/5b8de829f265da43623c4261)
+[https://juejin.im/post/5b7b88d46fb9a019e9767405](https://juejin.im/post/5b7b88d46fb9a019e9767405)
