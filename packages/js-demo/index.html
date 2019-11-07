@@ -9,6 +9,10 @@
   <body>
     <div id="root"></div>
     <script type="text/javascript">
+
+      /**
+       *  实现某些函数功能 https://juejin.im/post/5cef46226fb9a07eaf2b7516
+      */
       //判断数据类型
       const checkType = type => target =>
         `[object ${type}]` === Object.prototype.toString.call(target);
@@ -28,6 +32,14 @@
         return arryMap;
       };
 
+      const selfMap2 = function(fn, cxt) {
+        let arr = Array.prototype.slice.call(this);
+        return arr.reduce( (pre, cur, index) => {
+          return [...pre, fn.call(cxt, cur, index, this)]
+        },[] )
+      }
+
+
       /**
        * es5实现数组filter方法
        * [self, item, index, this]
@@ -41,7 +53,13 @@
         return filterArrat;
       };
 
+      const selfFliter2 = function(fn, cxt) {
+        return this.reduce( (pre, cur, index) => {
+          return fn.call(cxt, cur, index, this) ? [...pre, cur] : [...pre]
+        }, [] )
+      }
 
+      
 
 
 

@@ -245,3 +245,7 @@
 
 - 设计模式
 [xx](https://github.com/CyC2018/CS-Notes/blob/master/notes/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F.md)
+
+
+- GIT 
+[Git guilt, blame, and code review](https://www.atlassian.com/blog/archives/git-guilt-blame-code-review)
