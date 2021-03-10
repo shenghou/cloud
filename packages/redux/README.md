@@ -12,7 +12,7 @@ import {
   combineReducers,
   bindActionCreators,
   applyMiddleware,
-  compose
+  compose,
   //   __DO_NOT_USE__ActionTypes
 } from "redux";
 ```
@@ -62,13 +62,13 @@ const todoReducer = (state = initState, action) => {
 };
 ```
 
-redux 还提供了个 combineReducers 方法，调用没个子 reducer，合并他们的结果到一个 state 中，用对象字面量来写如下，
+redux 还提供了个 combineReducers 方法，调用每个子 reducer，合并他们的结果到一个 state 中，用对象字面量来写如下，
 
 ```js
 import { combineReducers } from "redux";
 const todoApp = combineReducers({
   reducer1,
-  reducer2
+  reducer2,
 });
 export default todoApp;
 ```
@@ -104,7 +104,7 @@ export function todoAction(alertRes, ...rest) {
   return {
     type: UPDATE_ALERT_RES,
     payload: alertRes,
-    ...rest
+    ...rest,
   };
 }
 ```
@@ -123,7 +123,7 @@ import {
   useDispatch,
   useSelector,
   useStore,
-  shallowEqual
+  shallowEqual,
 } from "react-redux";
 ```
 
@@ -141,19 +141,14 @@ render(
   <Provider store={store}>
     <App />
   </Provider>,
-  document.getElementById("root")
+  document.getElementById("root"),
 );
 ```
 
 另一个我们常用的函数`connect`能够连接 react 组件与 redux store，并返回一个与 store 连接的新组件
 
 ```js
-connect(
-  [mapStateToProps],
-  [mapDispatchToProps],
-  [mergeProps],
-  [options]
-);
+connect([mapStateToProps], [mapDispatchToProps], [mergeProps], [options]);
 ```
 
 根据以上这些，我们就可以创建一个简单的基于 redux 的 app
@@ -167,7 +162,7 @@ import { createStore } from "redux";
 import { Provider } from "react-redux";
 import Counter from "./counter";
 const initStatus = {
-  count: 0
+  count: 0,
 };
 function reducer(state = initStatus, action) {
   switch (action.type) {
@@ -203,7 +198,7 @@ import { connect } from "react-redux";
 import { incrementCount } from "./action";
 function mapStateToProps(state) {
   return {
-    count: state.count
+    count: state.count,
   };
 }
 class Counter extends React.Component {
@@ -266,7 +261,7 @@ import reducer2 from "./reducer2";
 import reducer3 from "./reducer3";
 import {
   reducer as formReducer,
-  actionTypes as formActionTypes
+  actionTypes as formActionTypes,
 } from "redux-form";
 import { reducer as uiReducer } from "redux-ui";
 import { reducers as APIReducer } from "~/API";
@@ -280,9 +275,9 @@ const rootReducer = combineReducers({
       if (!state || lodash.get(action, "XX") !== "XX") return state;
       //TODO SOMETHIN
       return state;
-    }
+    },
   }),
-  ui: uiReducer
+  ui: uiReducer,
 });
 
 export default rootReducer;
@@ -301,7 +296,7 @@ import * as action3 from "./action3";
 import { actions as APIActions } from "~/API";
 const actions = Object.assign({}, APIActions, action1, action2, action3);
 export function filterDispatchers(...args) {
-  args.forEach(v => {
+  args.forEach((v) => {
     if (!actions.hasOwnProperty(v)) {
       throw new Error(`filterDispatchers: No dispatcher named: ${v}`);
     }
@@ -336,9 +331,9 @@ export default function configureStore(preloadedState) {
 componets.js
 
 ```js
-export const selector1 = state => state.selector1;
-export const selector2 = state => state.selector2;
-export const selector3 = state => state.selector3;
+export const selector1 = (state) => state.selector1;
+export const selector2 = (state) => state.selector2;
+export const selector3 = (state) => state.selector3;
 ```
 
 selectors.js
@@ -351,16 +346,15 @@ import { selectors as APISelectors } from "~/API";
 const selectors = Object.assign(componentSelectors, APISelectors);
 export function filterSelectors(...args) {
   return function mapStateToProps(state) {
-    const inputSelectors = args.map(v => {
+    const inputSelectors = args.map((v) => {
       const selector = `${v}Selector`;
       if (!selectors.hasOwnProperty(selector)) {
         throw new Error(`filterSelectors: No selector named: ${selector}`);
       }
       return selectors[selector];
     });
-    return createSelector(
-      inputSelectors,
-      (...selected) => lodash.zipObject(args, selected)
+    return createSelector(inputSelectors, (...selected) =>
+      lodash.zipObject(args, selected),
     )(state);
   };
 }
@@ -377,11 +371,8 @@ import { connect } from "react-redux";
 import { filterSelectors } from "~/selectors";
 import { filterDispatchers } from "~/actions";
 const connector = compose(
-  connect(
-    filterSelectors("state"),
-    filterDispatchers("action")
-  ),
-  Hoc()
+  connect(filterSelectors("state"), filterDispatchers("action")),
+  Hoc(),
 );
 class Page extends React.Componet {}
 export default connector(Page);
@@ -417,7 +408,7 @@ export const GlobalContext = React.createContext({
   user: {},
   updateUser() {},
   something: {},
-  updateSomething: {}
+  updateSomething: {},
 });
 ```
 
@@ -456,7 +447,7 @@ class page extends React.componet {
     <div>111</div>;
   }
 }
-export default props => (
+export default (props) => (
   <GlobalContext.Consumer>
     {({ user, updateUser }) => (
       <Resources {...props} user={user} updateUser={updateUser} />
